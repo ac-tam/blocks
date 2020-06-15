@@ -11,18 +11,27 @@
   
   <center>
 
-    <button class = "buttons" onclick = "func()">Clear</button>
-    <br>
-    <br>
+    <div id = "canva">
+    </div>
+
+
+    <button class = "buttons" onclick = "func()">Clear</button> 
+     Width: <input type = "text" oninput = "y()" id = "x" style="width: 15px;" value = "4">
+     Height: <input type = "text" oninput = "y()" id = "y" style="width: 15px;" value = "4">
+
+    <script src="script.js"></script>
+
+    <p id = "info" onclick = "remove()">
+      Click on an empty box to place a filled box <br>
+      Click on a filled box to delete it <br>
+      Drag a box to a new position to move it
+     <br> Click on this to hide this
+    </p>
+  
+
+  
+  <p id = "permutation"></p>
   </center>
-  <div id = "canva">
-    <canvas id = "game"></canvas> 
-
-  </div>
-
- 
-  <script src="script.js"></script>
-
 </body>
 
 

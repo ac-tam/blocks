@@ -48,7 +48,7 @@ function drawRoom(width, height)
 var palcehold = 0;
 var moving = false;
 window.addEventListener("mousedown", function() {
-
+    
         moving = true;
 
         rawX = event.x - canvas.offsetLeft
@@ -62,27 +62,28 @@ window.addEventListener("mousedown", function() {
 });
 var placehold = -1
 window.addEventListener("mouseup", function() {
-  
+    
         moving = false
         rawX = event.x - canvas.offsetLeft
         rawY = event.y - canvas.offsetTop
 
         var xPos = (rawX - rawX % 100)/100 
         var yPos = (rawY - rawY % 100)/100 
-
+        if (xPos > canvas.width || xPos < 0 || yPos > canvas.height || yPos < 0)
+            return ""
+        var permutation = "";
         secondSpot = new spot(xPos, yPos)
-        this.console.log(firstSpot + " " + secondSpot)
         if (!secondSpot.equalss(firstSpot))
         {          
-            this.console.log("dif")
-
+            this.console.log(secondSpot)
+                if (secondSpot.x > width - 1)
+                    return ""
                 var temp = roomArray[firstSpot.y][firstSpot.x]
                 roomArray[firstSpot.y][firstSpot.x] = roomArray[secondSpot.y][secondSpot.x] 
                 roomArray[secondSpot.y][secondSpot.x] = temp
         }
         else
         {
-            this.console.log("same")
             if (roomArray[yPos][xPos] == 0)
             {    
 
@@ -108,6 +109,7 @@ window.addEventListener("mouseup", function() {
                 for (var y = 0; y < roomArray.length; y++)
                     for (var x = 0; x < roomArray[0].length; x++)
                         {
+                            permutation += roomArray[y][x] + " "
                             if (roomArray[y][x] != 0)        
                             {
                                 c.fillStyle = "black"
@@ -120,7 +122,7 @@ window.addEventListener("mouseup", function() {
                             }
             
                         }
-        
+                        this.document.getElementById("permutation").innerHTML = permutation.substring(0, permutation.length -1)
 })
 window.addEventListener("mousemove", function() {
     
@@ -131,10 +133,11 @@ window.addEventListener("mousemove", function() {
 
         var x = (rawX - rawX % 100)/100 
         var y = (rawY - rawY % 100)/100 
+        
                         
                 
         c.fillStyle = "rgb(100,100,100)"
-        c.fillRect(x*100, y*100, 100, 100)
+        c.fillRect(x*100 + 1, y*100 + 1, 100 - 1, 100 - 1)
 
     }
 
@@ -144,7 +147,11 @@ window.addEventListener("mousemove", function() {
 
 
 
+function remove() {
 
+
+  document.getElementById("info").style.display = "none"
+}
 
     
     
@@ -152,12 +159,37 @@ function func() {
   roomArray = Array(height ).fill().map(_ => Array(width ).fill(0))
   c.clearRect(0, 0, canvas.width, canvas.height);
   drawRoom(width, height)
-    count = 1
+  this.document.getElementById("permutation").innerHTML = ""
+  count = 1
 }
-console.log(canvas.offsetWidth)
 
+function y()
+{    
+    
+    width = parseInt(document.getElementById("x").value) 
+    height = parseInt(document.getElementById("y").value)
+    if (width > 9)
+    {
+        width = 9
+        document.getElementById("x").value = 9
+    }
+    if (height > 9)
+    {
+        height = 9
+        document.getElementById("y").value = 9
+    }
+    
 
+    document.getElementById('canva').style.width = (width ) * 100 + "px"
 
-var a = new spot(1,1)
-var b = new spot(1,1)
-console.log(a.equalss(b))
+    document.getElementById('canva').style.height = (height ) * 100 + "px"
+    roomArray = Array(height).fill().map(_ => Array(width ).fill(0))
+    canvas.width = canvas.parentNode.clientWidth;
+    canvas.height = canvas.parentNode.clientHeight;
+
+    
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.strokeStyle = "black"
+    drawRoom(width, height)
+count = 1
+}
